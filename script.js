@@ -159,28 +159,78 @@ function getGithubImage(github){
   return `https://github.com/${username}.png`;
 }
 
+function createAvatar(student){
+
+  const nameWithHyphen = student.name.replace(/\s+/g, "-");
+  const nameWithSpace = student.name;
+
+const basePath = window.location.hostname.includes("github.io")
+  ? "/squad_portfolio"
+  : "";
+
+const hyphenPath = `${basePath}/images/students/${nameWithHyphen}.jpg`;
+const spacePath = `${basePath}/images/students/${encodeURIComponent(nameWithSpace)}.jpg`;
+
+  const githubImage = getGithubImage(student.github);
+
+  const img = document.createElement("img");
+  img.className = "profile-img";
+
+  // 1️⃣ Try hyphen version first
+  img.src = hyphenPath;
+
+  img.onerror = () => {
+
+    // 2️⃣ Try space version
+    img.src = spacePath;
+
+    img.onerror = () => {
+
+      // 3️⃣ Try GitHub
+      if(githubImage){
+        img.src = githubImage;
+
+        img.onerror = () => {
+          img.replaceWith(createInitialDiv(student.name));
+        };
+
+      } else {
+        img.replaceWith(createInitialDiv(student.name));
+      }
+
+    };
+
+  };
+
+  return img;
+}
+
+function createInitialDiv(name){
+  const div = document.createElement("div");
+  div.className = "profile-fallback";
+  div.textContent = getInitials(name).toUpperCase();
+  return div;
+}
+
 function createStudentCard(student){
-
-  const image = getGithubImage(student.github);
-
-  const avatar = image
-    ? `<img src="${image}" class="profile-img">`
-    : `<div class="profile-fallback">${getInitials(student.name)}</div>`;
 
   const card = document.createElement("div");
   card.className = "student-card";
 
-  card.innerHTML = `
-    ${avatar}
-    <h3>${student.name}</h3>
-    <p>${student.bio}</p>
-  `;
+  const avatar = createAvatar(student);
 
-  // ✅ CLICK → OPEN MODAL
-  card.addEventListener("click", () => openProfile({
-    ...student,
-    image: image   // pass github image into modal
-  }));
+  const name = document.createElement("h3");
+  name.textContent = student.name;
+
+  const bio = document.createElement("p");
+  bio.textContent = student.bio;
+
+  card.appendChild(avatar);
+  card.appendChild(name);
+  card.appendChild(bio);
+
+  // Click → modal
+  card.addEventListener("click", () => openProfile(student));
 
   return card;
 }

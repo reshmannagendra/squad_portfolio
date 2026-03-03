@@ -48,6 +48,14 @@ const squadMembers = [
         linkedin: "https://www.linkedin.com/in/abhyuday-ragishetty-0b837a384/"
     },
     {
+        name: "Abinaya",
+        bio: "Full-stack developer building seamless websites",
+        projects: 8,
+        email: "abinaya.s.140@kalvium.community",
+        github: "https://github.com/abinaya",
+        linkedin: "https://www.linkdin.com/in/abinaya"
+    },
+    {
         name: "Aswin RV",
         bio: "UI/UX enthusiast crafting beautiful and intuitive user experiences",
         projects: 6,
