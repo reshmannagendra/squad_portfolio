@@ -360,14 +360,14 @@ const mentors = [
     bio: "Technical mentor guiding Squad 140 in full-stack architecture and scalable systems.",
     projects: "Mentor",
     email: "thakoor.rishwanth@kalvium.com",
-    github: "#",
-    linkedin: "#",
+    github: "https://github.com/ThakoorRishwanth",
+    linkedin: "https://www.linkedin.com/in/rishwanth-thakoor/",
     image: "images/mentors/rishwanth.png",
     type: "mentor"
   },
   {
     name: "Sathya Shree",
-    bio: "Development mentor focused on structured learning and real-world project execution.",
+    bio: "Program mentor supporting the cohort's growth and direction.",
     projects: "Mentor",
     email: "sathya.s@kalvium.com",
     github: "https://github.com/SATHYASHREE30",
