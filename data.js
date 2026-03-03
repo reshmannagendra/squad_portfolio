@@ -1,5 +1,45 @@
 const squadMembers = [
     {
+        name: "Reshman Nagendra",
+        bio: "Software developer with a passion for clean architecture patterns",
+        projects: 8,
+        email: "reshman.nagendra.s.140@kalvium.community",
+        github: "https://github.com/ReshmanNagendra",
+        linkedin: "https://www.linkedin.com/in/reshman-nagendra-5ab096377/"
+    },
+    {
+        name: "Devisrilakshmi Konduri",
+        bio: "React developer building modern interactive web applications",
+        projects: 5,
+        email: "devisrilakshmi.konduri.s.140@kalvium.community",
+        github: "https://github.com/devisrikonduri",
+        linkedin: "https://www.linkedin.com/in/devisri-konduri-99377b391/"
+    },
+    {
+        name: "Sai Raju",
+        bio: "Frontend engineer creating responsive layouts with CSS Grid",
+        projects: 6,
+        email: "sai.raju.s.140@kalvium.community",
+        github: "https://github.com/SaiRaju1430",
+        linkedin: "https://www.linkedin.com/in/sai-raju-domma-051063384/"
+    },
+    {
+        name: "Elayaraja G",
+        bio: "JavaScript enthusiast exploring modern frameworks and libraries",
+        projects: 8,
+        email: "elayarajag.s.140@kalvium.community",
+        github: "https://github.com/elayarajags140-commits",
+        linkedin: "https://www.linkedin.com/in/elayaraja-g-391332364/"
+    },
+    {
+        name: "Mubashira Muskan",
+        bio: "Web accessibility champion ensuring inclusive digital experiences",
+        projects: 4,
+        email: "mubashira@kalvium.community",
+        github: "https://github.com/mubashirasmuskan140",
+        linkedin: "https://www.linkedin.com/in/mubashirasmuskan140"
+    },
+    {
         name: "Abhyuday Ragishetty",
         bio: "Full-stack developer passionate about building scalable web applications",
         projects: 8,
@@ -32,14 +72,6 @@ const squadMembers = [
         linkedin: "https://www.linkedin.com/in/deebiksha-p-3688b8377/"
     },
     {
-        name: "Devisrilakshmi Konduri",
-        bio: "React developer building modern interactive web applications",
-        projects: 5,
-        email: "devisrilakshmi.konduri.s.140@kalvium.community",
-        github: "https://github.com/devisrikonduri",
-        linkedin: "https://www.linkedin.com/in/devisri-konduri-99377b391/"
-    },
-    {
         name: "Dhanalakshmi N",
         bio: "Problem solver with expertise in algorithms and data structures",
         projects: 4,
@@ -54,14 +86,6 @@ const squadMembers = [
         email: "dharshinipriya.s@kalvium.community",
         github: "https://github.com/dharshinipriyass140",
         linkedin: "https://www.linkedin.com/in/dharshinipriyass140"
-    },
-    {
-        name: "Elayaraja G",
-        bio: "JavaScript enthusiast exploring modern frameworks and libraries",
-        projects: 8,
-        email: "elayarajag.s.140@kalvium.community",
-        github: "https://github.com/elayarajags140-commits",
-        linkedin: "https://www.linkedin.com/in/elayaraja-g-391332364/"
     },
     {
         name: "Gopikrishnan K",
@@ -152,20 +176,12 @@ const squadMembers = [
         linkedin: "https://www.linkedin.com/in/mohamedraihanss140"
     },
     {
-        name: "Mubashira",
-        bio: "Web accessibility champion ensuring inclusive digital experiences",
-        projects: 4,
-        email: "mubashira@kalvium.community",
-        github: "https://github.com/mubashiras140",
-        linkedin: "https://www.linkedin.com/in/mubashiras140"
-    },
-    {
-        name: "Muskan Praisy Esther J",
+        name: " Praisy Esther J",
         bio: "UI developer passionate about animation and interactive design",
         projects: 7,
-        email: "muskan.praisy@kalvium.community",
-        github: "https://github.com/muskanpraisyjs140",
-        linkedin: "https://www.linkedin.com/in/muskanpraisyjs140"
+        email: "praisy@kalvium.community",
+        github: "https://github.com/praisyjs140",
+        linkedin: "https://www.linkedin.com/in/praisyjs140"
     },
     {
         name: "Pravindiran M",
@@ -208,28 +224,12 @@ const squadMembers = [
         linkedin: "https://www.linkedin.com/in/rakshithharshass140"
     },
     {
-        name: "Reshman Nagendra",
-        bio: "Software developer with a passion for clean architecture patterns",
-        projects: 8,
-        email: "reshman.nagendra.s.140@kalvium.community",
-        github: "https://github.com/ReshmanNagendra",
-        linkedin: "https://www.linkedin.com/in/reshman-nagendra-5ab096377/"
-    },
-    {
         name: "Revanth Varma",
         bio: "API integration specialist connecting services and platforms",
         projects: 4,
         email: "revanth.varma@kalvium.community",
         github: "https://github.com/revanthvarmas140",
         linkedin: "https://www.linkedin.com/in/revanthvarmas140"
-    },
-    {
-        name: "Sai Raju",
-        bio: "Frontend engineer creating responsive layouts with CSS Grid",
-        projects: 6,
-        email: "sai.raju.s.140@kalvium.community",
-        github: "https://github.com/SaiRaju1430",
-        linkedin: "https://www.linkedin.com/in/sai-raju-domma-051063384/"
     },
     {
         name: "Saifoor Rahman",
@@ -362,8 +362,8 @@ const mentors = [
     bio: "Development mentor focused on structured learning and real-world project execution.",
     projects: "Mentor",
     email: "sathya.s@kalvium.com",
-    github: "#",
-    linkedin: "#",
+    github: "https://github.com/SATHYASHREE30",
+    linkedin: "https://www.linkedin.com/in/sathya-shree-361727262/",
     image: "images/mentors/sathya.png",
     type: "mentor"
   },
