@@ -1,4 +1,4 @@
-
+//const GITHUB_TOKEN = "******************************************";
 
 const CACHE_KEY = "squad_projects_cache";
 const CACHE_TIME_KEY = "squad_projects_cache_time";
@@ -10,7 +10,9 @@ const apiLimitBox = document.getElementById("api-limit");
 async function fetchGitHubLimit() {
   try {
     const res = await fetch("https://api.github.com/rate_limit", {
-
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`
+      }
     });
 
     const data = await res.json();
@@ -25,14 +27,34 @@ async function fetchGitHubLimit() {
   }
 }
 
-async function fetchRepos() {
+async function fetchRepos(username) {
 
-  const res = await fetch("/.netlify/functions/repos");
+  const url = `https://api.github.com/users/${username}/repos`;
 
-  if (!res.ok) return [];
+  try {
 
-  return await res.json();
+    const res = await fetch(url, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`
+      }
+    });
 
+    if (!res.ok) return [];
+
+    const repos = await res.json();
+
+    return repos.map(repo => ({
+      name: repo.name,
+      description: repo.description,
+      stars: repo.stargazers_count,
+      forks: repo.forks_count,
+      url: repo.html_url,
+      owner: repo.owner.login
+    }));
+
+  } catch {
+    return [];
+  }
 }
 
 async function loadProjects() {
@@ -64,7 +86,11 @@ async function loadProjects() {
     })
     .filter(Boolean);
 
-    const projects = await fetchRepos();
+  const repoPromises = usernames.map(fetchRepos);
+
+  const results = await Promise.all(repoPromises);
+
+  const projects = results.flat();
 
   localStorage.setItem(CACHE_KEY, JSON.stringify(projects));
   localStorage.setItem(CACHE_TIME_KEY, now);
