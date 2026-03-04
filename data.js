@@ -132,7 +132,7 @@ const squadMembers = [
         bio: "Frontend specialist crafting pixel-perfect user interfaces",
         projects: 5,
         email: "jagruthi.gunapati.s.140@kalvium.community",
-        github: "https://github.com/jagruthigunapatis140",
+        github: "https://github.com/jagruthigunapati-kalvium",
         linkedin: "https://www.linkedin.com/in/gunapati-jagruthi-040a06383"
     },
     {
@@ -188,7 +188,7 @@ const squadMembers = [
         bio: "UI developer passionate about animation and interactive design",
         projects: 7,
         email: "praisy@kalvium.community",
-        github: "https://github.com/praisyjs140",
+        github: "https://github.com/praisyesther",
         linkedin: "https://www.linkedin.com/in/praisyjs140"
     },
     {
@@ -236,7 +236,7 @@ const squadMembers = [
         bio: "API integration specialist connecting services and platforms",
         projects: 4,
         email: "revanth.varma@kalvium.community",
-        github: "https://github.com/revanthvarmas140",
+        github: "https://github.com/revanthvarmas140-collab",
         linkedin: "https://www.linkedin.com/in/revanthvarmas140"
     },
     {
@@ -244,7 +244,7 @@ const squadMembers = [
         bio: "Full-stack developer building end-to-end web solutions",
         projects: 5,
         email: "saifoor.rahman@kalvium.community",
-        github: "https://github.com/saifoorrahmans140",
+        github: "https://github.com/saifoorrahman",
         linkedin: "https://www.linkedin.com/in/saifoorrahmans140"
     },
     {

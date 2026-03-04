@@ -1,10 +1,28 @@
-
-
 window.addEventListener("load", () => {
-  setTimeout(() => {
-    document.querySelector(".loader").classList.add("hide");
+
+  const loader = document.querySelector(".loader");
+  const hero = document.querySelector(".hero");
+
+  if(sessionStorage.getItem("introPlayed")){
+
+    // skip loader
+    loader.classList.add("hide");
     document.body.style.overflow = "auto";
-  }, 5000);
+
+    // skip cloud animation
+    hero.classList.add("no-intro");
+
+  }else{
+
+    sessionStorage.setItem("introPlayed","true");
+
+    setTimeout(() => {
+      loader.classList.add("hide");
+      document.body.style.overflow = "auto";
+    },5000);
+
+  }
+
 });
 
 
