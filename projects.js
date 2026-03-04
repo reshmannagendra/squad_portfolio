@@ -81,10 +81,13 @@ function renderProjects(projects) {
   const grouped = {};
 
   // group repos by github username
-  projects.forEach(repo => {
-    if (!grouped[repo.owner]) grouped[repo.owner] = [];
-    grouped[repo.owner].push(repo);
-  });
+projects.forEach(repo => {
+  const owner = repo.owner.login;
+
+  if (!grouped[owner]) grouped[owner] = [];
+
+  grouped[owner].push(repo);
+});
 
   squadMembers.forEach(member => {
 
@@ -140,14 +143,17 @@ function renderProjects(projects) {
     });
 
     // toggle folder
-    header.onclick = () => {
+      header.onclick = () => {
 
-      const isOpen = grid.style.display === "grid";
+        const icon = header.querySelector(".folder-icon");
 
-      grid.style.display = isOpen ? "none" : "grid";
-      icon.textContent = isOpen ? "📁" : "📂";
+        const isOpen = grid.style.display === "grid";
 
-    };
+        grid.style.display = isOpen ? "none" : "grid";
+
+        icon.textContent = isOpen ? "📁" : "📂";
+
+      };
 
     section.appendChild(header);
     section.appendChild(grid);
