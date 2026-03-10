@@ -1,18 +1,38 @@
-//const GITHUB_TOKEN = "******************************************";
+// ===============================
+// ASK FOR GITHUB TOKEN
+// ===============================
+let GITHUB_TOKEN = prompt("Enter your GitHub API token (leave empty if none):");
 
+// create headers only if token exists
+const headers = GITHUB_TOKEN
+  ? { Authorization: `token ${GITHUB_TOKEN}` }
+  : {};
+
+
+// ===============================
+// CACHE SETTINGS
+// ===============================
 const CACHE_KEY = "squad_projects_cache";
 const CACHE_TIME_KEY = "squad_projects_cache_time";
 const ONE_HOUR = 60 * 60 * 1000;
 
+
+// ===============================
+// ELEMENTS
+// ===============================
 const projectGrid = document.getElementById("projects-container");
 const apiLimitBox = document.getElementById("api-limit");
 
+
+// ===============================
+// FETCH GITHUB API LIMIT
+// ===============================
 async function fetchGitHubLimit() {
+
   try {
+
     const res = await fetch("https://api.github.com/rate_limit", {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`
-      }
+      headers: headers
     });
 
     const data = await res.json();
@@ -25,8 +45,13 @@ async function fetchGitHubLimit() {
   } catch (err) {
     console.error("Failed to get API limit");
   }
+
 }
 
+
+// ===============================
+// FETCH USER REPOS
+// ===============================
 async function fetchRepos(username) {
 
   const url = `https://api.github.com/users/${username}/repos`;
@@ -34,9 +59,7 @@ async function fetchRepos(username) {
   try {
 
     const res = await fetch(url, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`
-      }
+      headers: headers
     });
 
     if (!res.ok) return [];
@@ -55,8 +78,13 @@ async function fetchRepos(username) {
   } catch {
     return [];
   }
+
 }
 
+
+// ===============================
+// LOAD PROJECTS
+// ===============================
 async function loadProjects() {
 
   const cached = localStorage.getItem(CACHE_KEY);
@@ -79,10 +107,12 @@ async function loadProjects() {
 
   const usernames = squadMembers
     .map(member => {
+
       if (!member.github) return null;
 
       const parts = member.github.split("/");
       return parts[parts.length - 1];
+
     })
     .filter(Boolean);
 
@@ -98,18 +128,25 @@ async function loadProjects() {
   renderProjects(projects);
 
   fetchGitHubLimit();
+
 }
 
+
+// ===============================
+// RENDER PROJECTS
+// ===============================
 function renderProjects(projects) {
 
   projectGrid.innerHTML = "";
 
   const grouped = {};
 
-  // group repos by github username
   projects.forEach(repo => {
+
     if (!grouped[repo.owner]) grouped[repo.owner] = [];
+
     grouped[repo.owner].push(repo);
+
   });
 
   squadMembers.forEach(member => {
@@ -133,6 +170,7 @@ function renderProjects(projects) {
       <span class="repo-count">${repos.length} projects</span>
     `;
 
+    const icon = header.querySelector(".folder-icon");
 
     const grid = document.createElement("div");
     grid.className = "creator-grid";
@@ -148,7 +186,7 @@ function renderProjects(projects) {
         <p>${project.description || "No description available"}</p>
 
         <div class="project-meta">
-          ⭐ ${project.stars}
+          ⭐ ${project.stars} &nbsp;&nbsp;
           🍴 ${project.forks}
         </div>
 
@@ -165,7 +203,6 @@ function renderProjects(projects) {
 
     });
 
-    // toggle folder
     header.onclick = () => {
 
       const isOpen = grid.style.display === "grid";
@@ -184,4 +221,8 @@ function renderProjects(projects) {
 
 }
 
+
+// ===============================
+// START
+// ===============================
 loadProjects();
