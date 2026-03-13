@@ -1,3 +1,11 @@
+const button = document.getElementById('button');
+
+button.addEventListener('click', () => {
+  window.history.back();
+});
+
+
+
 // ===============================
 // ASK FOR GITHUB TOKEN
 // ===============================

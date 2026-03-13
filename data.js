@@ -36,8 +36,8 @@ const squadMembers = [
         bio: "Web accessibility champion ensuring inclusive digital experiences",
         projects: 4,
         email: "mubashira@kalvium.community",
-        github: "https://github.com/mubashirasmuskan140",
-        linkedin: "https://www.linkedin.com/in/mubashirasmuskan140"
+        github: "https://github.com/smmuskan140",
+        linkedin: "https://www.linkedin.com/in/smmuskan-muskan-6152b13b3/"
     },
     {
         name: "Abhyuday Ragishetty",
@@ -52,8 +52,8 @@ const squadMembers = [
         bio: "Full-stack developer building seamless websites",
         projects: 8,
         email: "abinaya.s.140@kalvium.community",
-        github: "https://github.com/abinaya",
-        linkedin: "https://www.linkdin.com/in/abinaya"
+        github: "https://github.com/abinayavs140",
+        linkedin: "http://www.linkedin.com/in/abinaya-v7"
     },
     {
         name: "Aswin RV",
@@ -84,8 +84,8 @@ const squadMembers = [
         bio: "Problem solver with expertise in algorithms and data structures",
         projects: 4,
         email: "dhanalakshmi.n@kalvium.community",
-        github: "https://github.com/dhanalakshmins140",
-        linkedin: "https://www.linkedin.com/in/dhanalakshmins140"
+        github: "https://github.com/dhanalakshmins140", //needs to verified
+        linkedin: "https://www.linkedin.com/in/dhanalakshmi-n-540869384/"
     },
     {
         name: "Dharshinipriya S",
@@ -140,7 +140,7 @@ const squadMembers = [
         bio: "Database architect designing efficient data models and queries",
         projects: 4,
         email: "jaiakash.k.s.140@kalvuim.community",
-        github: "https://github.com/jaiakashks140",
+        github: "https://github.com/jai797331",
         linkedin: "https://www.linkedin.com/in/jaiakash-k-71b2bb3b3/"
     },
     {
@@ -284,8 +284,8 @@ const squadMembers = [
         bio: "Frontend developer implementing state management solutions",
         projects: 7,
         email: "satwik.bhavan@kalvium.community",
-        github: "https://github.com/satwikbhavans140",
-        linkedin: "https://www.linkedin.com/in/satwikbhavans140"
+        github: "https://github.com/sathvikbs140-dev",
+        linkedin: "http://www.linkedin.com/in/sathvik-bhavan-6a1561386"
 
     },
     {
@@ -309,8 +309,8 @@ const squadMembers = [
         bio: "Backend specialist building scalable microservices architecture",
         projects: 8,
         email: "umakanth.reddy@kalvium.community",
-        github: "https://github.com/umakanthreddys140",
-        linkedin: "https://www.linkedin.com/in/umakanthreddys140"
+        github: "https://github.com/umakanthreddys140-sys",
+        linkedin: "https://www.linkedin.com/in/a-umakanth-reddy-453630373/"
     },
     {
         name: "Varunitha Ramesh",
