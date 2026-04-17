@@ -12,6 +12,7 @@
     <div class="scroll-wrapper">
         <nav class="navbar">
             <div class="nav-left">
+                <button id="navBackBtn" class="nav-back-btn" title="Go Back">←</button>
                 <div class="logo-box"></div>
                 <span class="logo-text">Squad_140</span>
             </div>
@@ -20,6 +21,7 @@
                 <li><a href="index.html#timeline">Timeline</a></li>
                 <li><a href="index.html#mentors">Mentors</a></li>
                 <li><a href="index.html#students">Students</a></li>
+                <li><a href="#" id="settingsGear" title="GitHub API Settings">⚙️</a></li>
                 <span class="nav-indicator"></span>
             </ul>
         </nav>
@@ -42,6 +44,7 @@
 
         <div class="button-container">
             <button type="button" id="button" class="back-btn">Go Back</button>
+            <button type="button" id="manageApiBtn" class="settings-btn">Manage API Key</button>
         </div>
     </div>
 
@@ -49,11 +52,14 @@
     <div class="settings-modal" id="settingsModal" style="display:none;">
         <div class="settings-content">
             <h3>GitHub Settings</h3>
-            <input type="password" id="ghTokenInput" placeholder="Enter GitHub Token (Local storage only)">
+            <p>Enter your Personal Access Token to bypass rate limits.</p>
+            <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxx">
             <div class="modal-buttons">
-                <button id="saveTokenBtn">Save</button>
+                <button id="saveTokenBtn">Save Token</button>
+                <button id="clearTokenBtn">Clear Token</button>
                 <button id="closeSettingsBtn">Close</button>
             </div>
+            <small>Tokens are stored locally in your browser.</small>
         </div>
     </div>
 

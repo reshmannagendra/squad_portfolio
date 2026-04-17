@@ -3,11 +3,13 @@
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
     const button = document.getElementById('button');
-    if (button) {
-        button.addEventListener('click', () => {
-            window.history.back();
-        });
-    }
+    const navBackBtn = document.getElementById('navBackBtn');
+
+    const goBack = () => window.history.back();
+
+    if (button) button.addEventListener('click', goBack);
+    if (navBackBtn) navBackBtn.addEventListener('click', goBack);
+
 
     // Navbar indicator logic
     const links = document.querySelectorAll(".nav-links a");
@@ -35,25 +37,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Settings Modal Logic
-    const settingsBtn = document.getElementById("settingsBtn");
+    const settingsGear = document.getElementById("settingsGear");
+    const manageApiBtn = document.getElementById("manageApiBtn");
     const settingsModal = document.getElementById("settingsModal");
     const closeSettingsBtn = document.getElementById("closeSettingsBtn");
     const saveTokenBtn = document.getElementById("saveTokenBtn");
+    const clearTokenBtn = document.getElementById("clearTokenBtn");
     const ghTokenInput = document.getElementById("ghTokenInput");
 
     if (settingsModal) {
-        // Simple gear icon or trigger can be added to navbar if needed
-        // For now, we'll keep the logic ready if they click the placeholder link
-        const trigger = document.querySelector('a[href="#settings"]');
-        if (trigger) {
-            trigger.onclick = (e) => {
-                e.preventDefault();
-                settingsModal.style.display = "flex";
-            };
-        }
+        const openModal = (e) => {
+            e.preventDefault();
+            const savedToken = localStorage.getItem("github_token");
+            if (savedToken) ghTokenInput.value = savedToken;
+            settingsModal.style.display = "flex";
+        };
 
-        if (closeSettingsBtn) closeSettingsBtn.onclick = () => settingsModal.style.display = "none";
+        if (settingsGear) settingsGear.onclick = openModal;
+        if (manageApiBtn) manageApiBtn.onclick = openModal;
+
+        const closeModal = () => settingsModal.style.display = "none";
+        if (closeSettingsBtn) closeSettingsBtn.onclick = closeModal;
         
+        // Close on clicking outside
+        window.onclick = (e) => { if (e.target === settingsModal) closeModal(); };
+
         if (saveTokenBtn) {
             saveTokenBtn.onclick = () => {
                 const token = ghTokenInput.value.trim();
@@ -64,8 +72,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             };
         }
+
+        if (clearTokenBtn) {
+            clearTokenBtn.onclick = () => {
+                localStorage.removeItem("github_token");
+                ghTokenInput.value = "";
+                alert("Token cleared. Refreshing...");
+                location.reload();
+            };
+        }
     }
 });
+
 
 // ===============================
 // CONSTANTS & STATE
@@ -96,6 +114,55 @@ function getGithubImage(github) {
 function getInitials(name) {
     return name.split(" ").map(n => n[0]).join("").toUpperCase();
 }
+
+/**
+ * Creates an avatar element with a multi-step fallback system
+ */
+function createProjectAvatar(member) {
+    const wrapper = document.createElement("div");
+    wrapper.className = "creator-avatar-wrapper";
+
+    const initials = getInitials(member.name);
+    const fallback = document.createElement("div");
+    fallback.className = "creator-avatar-fallback";
+    fallback.textContent = initials;
+    fallback.style.zIndex = "1";
+
+    const img = document.createElement("img");
+    img.className = "creator-avatar";
+    img.alt = member.name;
+    img.style.zIndex = "2";
+    img.style.display = "none"; // Hide until loaded
+
+    const githubImgUrl = getGithubImage(member.github);
+    
+    // Path Waterfall
+    const localSpace = `images/students/${encodeURIComponent(member.name)}.jpg`;
+    const localHyphen = `images/students/${member.name.replace(/\s+/g, "-")}.jpg`;
+
+    // Strategy: Try Local Space -> Local Hyphen -> GitHub -> Give up
+    const attemptLoad = (urls) => {
+        if (urls.length === 0) {
+            img.style.display = "none";
+            return;
+        }
+
+        const current = urls.shift();
+        img.src = current;
+        img.onload = () => { img.style.display = "block"; };
+        img.onerror = () => attemptLoad(urls);
+    };
+
+    const urlsToTry = [localSpace, localHyphen];
+    if (githubImgUrl) urlsToTry.push(githubImgUrl);
+
+    attemptLoad(urlsToTry);
+
+    wrapper.appendChild(fallback);
+    wrapper.appendChild(img);
+    return wrapper;
+}
+
 
 // ===============================
 // GITHUB API CORE
@@ -180,21 +247,23 @@ function renderProjects(projects) {
         const section = document.createElement("div");
         section.className = "creator-section";
 
-        const profileImg = getGithubImage(member.github);
-        const avatarHtml = `
-            <div class="creator-avatar-wrapper">
-                ${profileImg ? `<img src="${profileImg}" class="creator-avatar" alt="${member.name}" onerror="this.style.display='none'">` : ''}
-                <div class="creator-avatar-fallback">${getInitials(member.name)}</div>
-            </div>
-        `;
-
         const header = document.createElement("div");
         header.className = "creator-header";
-        header.innerHTML = `
-            ${avatarHtml}
-            <span class="creator-name">${member.name}</span>
-            <span class="repo-count">${repos.length} Repos</span>
-        `;
+
+        const avatar = createProjectAvatar(member);
+        
+        const nameSpan = document.createElement("span");
+        nameSpan.className = "creator-name";
+        nameSpan.textContent = member.name;
+
+        const countSpan = document.createElement("span");
+        countSpan.className = "repo-count";
+        countSpan.textContent = `${repos.length} Repos`;
+
+        header.appendChild(avatar);
+        header.appendChild(nameSpan);
+        header.appendChild(countSpan);
+
 
         const grid = document.createElement("div");
         grid.className = "creator-grid";

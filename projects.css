@@ -35,8 +35,31 @@ body{
 .nav-left{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:16px;
 }
+
+.nav-back-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 18px;
+  padding-bottom: 2px;
+}
+
+.nav-back-btn:hover {
+  background: #ff2a6d;
+  border-color: #ff2a6d;
+  transform: translateX(-3px);
+}
+
 
 .logo-box{
   width:24px;
@@ -150,6 +173,11 @@ body{
   border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
+.creator-avatar {
+  background: #000;
+  z-index: 2; /* 👈 Photo on top */
+}
+
 .creator-avatar-fallback {
   display: flex;
   align-items: center;
@@ -157,7 +185,9 @@ body{
   background: linear-gradient(135deg, #ff2a6d, #ff6b6b);
   font-weight: 800;
   font-size: 14px;
+  z-index: 1; /* 👈 Initials behind */
 }
+
 
 .creator-name {
   font-size: 18px;
@@ -234,27 +264,133 @@ body{
   color: white;
 }
 
-/* ================== FOOTER ================== */
+#settingsGear {
+    font-size: 18px;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+#settingsGear:hover {
+    transform: rotate(45deg);
+    color: #ff2a6d;
+}
+
+/* ================== BUTTONS ================== */
 
 .button-container {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
   padding-bottom: 80px;
 }
 
-.back-btn {
+.back-btn, .settings-btn {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 12px 30px;
+  padding: 12px 24px;
   border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   transition: 0.3s;
 }
 
-.back-btn:hover {
+.back-btn:hover, .settings-btn:hover {
   border-color: white;
   background: rgba(255, 255, 255, 0.05);
+}
+
+.settings-btn {
+    border-color: rgba(255, 42, 109, 0.3);
+    color: #ff2a6d;
+}
+
+.settings-btn:hover {
+    background: rgba(255, 42, 109, 0.1);
+    border-color: #ff2a6d;
+}
+
+/* ================== MODAL ================== */
+
+.settings-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.settings-content {
+    background: #111114;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 32px;
+    border-radius: 20px;
+    width: min(400px, 92%);
+    text-align: center;
+}
+
+.settings-content h3 {
+    margin-bottom: 8px;
+    color: #ff2a6d;
+}
+
+.settings-content p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 20px;
+}
+
+.settings-content input {
+    width: 100%;
+    padding: 12px;
+    background: #1a1a1d;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    color: white;
+    font-family: monospace;
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal-buttons button {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+#saveTokenBtn {
+    background: rgba(255, 42, 109, 0.1);
+    color: #ff2a6d;
+    border-color: rgba(255, 42, 109, 0.3);
+}
+
+#saveTokenBtn:hover {
+    background: #ff2a6d;
+    color: white;
+}
+
+#clearTokenBtn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.settings-content small {
+    display: block;
+    margin-top: 20px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
 }
 
 /* ================== RESPONSIVE ================== */
@@ -282,5 +418,14 @@ body{
   
   .creator-header {
     padding: 14px 18px;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    padding: 0 20px 80px;
+  }
+  
+  .back-btn, .settings-btn {
+    width: 100%;
   }
 }
