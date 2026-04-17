@@ -3,22 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the diverse projects built by Squad 140 members.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="projects.css">
-    <title>Projects|Squad 140</title>
+    <title>Projects | Squad 140</title>
 </head>
 <body>
-    <div class="button back">
-        <button type="button" id="button">go back</button>
+    <div class="scroll-wrapper">
+        <nav class="navbar">
+            <div class="nav-left">
+                <div class="logo-box"></div>
+                <span class="logo-text">Squad_140</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#timeline">Timeline</a></li>
+                <li><a href="index.html#mentors">Mentors</a></li>
+                <li><a href="index.html#students">Students</a></li>
+                <span class="nav-indicator"></span>
+            </ul>
+        </nav>
+
+        <section class="projects-hero">
+            <h1>Squad 140 Projects</h1>
+            <p>Innovative builds and contributions from our talented members.</p>
+        </section>
+
+        <main id="main-content">
+            <div id="api-limit" class="api-info"></div>
+            
+            <div id="loading-state" class="loader-container" style="display:none;">
+                <div class="spinner"></div>
+                <p>Fetching repositories...</p>
+            </div>
+
+            <div id="projects-container"></div>
+        </main>
+
+        <div class="button-container">
+            <button type="button" id="button" class="back-btn">Go Back</button>
+        </div>
     </div>
-    <h1>Squad 140 Projects</h1>
 
-    <div id="api-limit"></div>
-
-    <div id="projects-container"></div>
+    <!-- SETTINGS MODAL -->
+    <div class="settings-modal" id="settingsModal" style="display:none;">
+        <div class="settings-content">
+            <h3>GitHub Settings</h3>
+            <input type="password" id="ghTokenInput" placeholder="Enter GitHub Token (Local storage only)">
+            <div class="modal-buttons">
+                <button id="saveTokenBtn">Save</button>
+                <button id="closeSettingsBtn">Close</button>
+            </div>
+        </div>
+    </div>
 
     <script src="data.js"></script>
     <script src="projects.js"></script>
-
-
 </body>
 </html>

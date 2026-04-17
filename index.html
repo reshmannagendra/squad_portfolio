@@ -1,13 +1,157 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>tmp_vite</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squad 140</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scroll-wrapper">
+<nav class="navbar">
+
+  <div class="nav-left">
+    <div class="logo-box"></div>
+    <span class="logo-text">Squad_140</span>
+  </div>
+
+<ul class="nav-links">
+
+  <li><a href="#home" data-section="home">Home</a></li>
+  <li><a href="#timeline" data-section="timeline">Timeline</a></li>
+  <li><a href="#mentors" data-section="mentors">Mentors</a></li>
+  <li><a href="#students" data-section="students">Students</a></li>
+
+  <span class="nav-indicator"></span>
+
+</ul>
+
+</nav>
+
+<!-- ☁️ LOADER -->
+<div class="loader">
+
+  <div class="loader-content">
+    <h1>Squad 140</h1>
+    <div class="loader-line"></div>
+  </div>
+
+  <img src="images/cloud_1.png" class="cloud cloud1">
+  <img src="images/cloud_2.png" class="cloud cloud2">
+  <img src="images/cloud_3.png" class="cloud cloud3">
+
+</div>
+
+
+<!-- 🏯 HERO -->
+<section class="hero" id="home">
+
+  <!-- 🏯 BACKGROUND -->
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-inner">
+
+    <div class="hero-main-card">
+      <h1>Squad 140 Kalvians</h1>
+    </div>
+
+    <div class="hero-stats">
+      
+      <div class="stat-card">
+        <div class="stat-label">members</div>
+        <div class="stat-value">44</div>
+      </div>
+  
+      <a href="projects.html" class="card-link">
+      <div class="stat-card">
+        <div class="stat-label">projects built</div>
+        <div class="stat-value">120+</div>
+      </div>
+      </a>
+
+      <div class="stat-card">
+        <div class="stat-label">build time</div>
+        <div class="stat-value">50K+</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section id="timeline">
+
+    <div class="timeline">
+
+        <h2 class="section-title">Journey of Squad 140</h2>
+
+        <div class="timeline-line"></div>
+
+        <div class="timeline-container">
+
+            <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span>Week 1</span>
+                <h3>Foundation Begins</h3>
+                <p>Started with C++ and problem solving.</p>
+            </div>
+            </div>
+
+            <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span>Week 5</span>
+                <h3>Web Development</h3>
+                <p>Built first responsive projects.</p>
+            </div>
+            </div>
+
+            <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <span>Week 10</span>
+                <h3>Squad Pushes forward...</h3>
+                <p>Real collaboration begins.</p>
+            </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section id="mentors" class="mentors-section">
+
+  <h2 class="section-title">Mentors</h2>
+
+  <div class="mentors-grid" id="mentorsGrid"></div>
+
+</section>
+
+<section id="students" class="students-section">
+
+  <h2 class="section-title">Students</h2>
+
+  <div class="students-grid" id="studentsGrid"></div>
+
+</section>
+
+<div class="profile-modal" id="profileModal">
+  <div class="modal-content" id="modalContent">
+    <span class="modal-close" id="modalClose">&times;</span>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</div>
+</body>
 </html>

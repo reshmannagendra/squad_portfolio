@@ -1,236 +1,234 @@
-const button = document.getElementById('button');
+// ===============================
+// NAVIGATION & UI
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+    const button = document.getElementById('button');
+    if (button) {
+        button.addEventListener('click', () => {
+            window.history.back();
+        });
+    }
 
-button.addEventListener('click', () => {
-  window.history.back();
+    // Navbar indicator logic
+    const links = document.querySelectorAll(".nav-links a");
+    const indicator = document.querySelector(".nav-indicator");
+    const nav = document.querySelector(".nav-links");
+
+    if (indicator && nav && links.length > 0) {
+        let activeLink = links[0];
+        
+        function moveIndicator(el) {
+            const linkRect = el.getBoundingClientRect();
+            const navRect = nav.getBoundingClientRect();
+            indicator.style.width = `${linkRect.width}px`;
+            indicator.style.left = `${linkRect.left - navRect.left}px`;
+        }
+
+        moveIndicator(activeLink);
+
+        links.forEach(link => {
+            link.addEventListener("mouseenter", () => moveIndicator(link));
+        });
+
+        nav.addEventListener("mouseleave", () => moveIndicator(activeLink));
+        window.addEventListener('resize', () => moveIndicator(activeLink));
+    }
+
+    // Settings Modal Logic
+    const settingsBtn = document.getElementById("settingsBtn");
+    const settingsModal = document.getElementById("settingsModal");
+    const closeSettingsBtn = document.getElementById("closeSettingsBtn");
+    const saveTokenBtn = document.getElementById("saveTokenBtn");
+    const ghTokenInput = document.getElementById("ghTokenInput");
+
+    if (settingsModal) {
+        // Simple gear icon or trigger can be added to navbar if needed
+        // For now, we'll keep the logic ready if they click the placeholder link
+        const trigger = document.querySelector('a[href="#settings"]');
+        if (trigger) {
+            trigger.onclick = (e) => {
+                e.preventDefault();
+                settingsModal.style.display = "flex";
+            };
+        }
+
+        if (closeSettingsBtn) closeSettingsBtn.onclick = () => settingsModal.style.display = "none";
+        
+        if (saveTokenBtn) {
+            saveTokenBtn.onclick = () => {
+                const token = ghTokenInput.value.trim();
+                if (token) {
+                    localStorage.setItem("github_token", token);
+                    alert("Token saved safely. Refreshing projects...");
+                    location.reload();
+                }
+            };
+        }
+    }
 });
 
-
-
 // ===============================
-// ASK FOR GITHUB TOKEN
+// CONSTANTS & STATE
 // ===============================
-let GITHUB_TOKEN = prompt("Enter your GitHub API token (leave empty if none):");
-
-// create headers only if token exists
-const headers = GITHUB_TOKEN
-  ? { Authorization: `token ${GITHUB_TOKEN}` }
-  : {};
-
-
-// ===============================
-// CACHE SETTINGS
-// ===============================
-const CACHE_KEY = "squad_projects_cache";
-const CACHE_TIME_KEY = "squad_projects_cache_time";
+const CACHE_KEY = "squad_projects_cache_v4";
+const CACHE_TIME_KEY = "squad_projects_cache_time_v4";
 const ONE_HOUR = 60 * 60 * 1000;
+const TOKEN_KEY = "github_token";
 
-
-// ===============================
-// ELEMENTS
-// ===============================
 const projectGrid = document.getElementById("projects-container");
 const apiLimitBox = document.getElementById("api-limit");
+const loadingState = document.getElementById("loading-state");
 
-
-// ===============================
-// FETCH GITHUB API LIMIT
-// ===============================
-async function fetchGitHubLimit() {
-
-  try {
-
-    const res = await fetch("https://api.github.com/rate_limit", {
-      headers: headers
-    });
-
-    const data = await res.json();
-
-    if (apiLimitBox) {
-      apiLimitBox.textContent =
-        `GitHub API remaining: ${data.rate.remaining} / ${data.rate.limit}`;
-    }
-
-  } catch (err) {
-    console.error("Failed to get API limit");
-  }
-
+function getHeaders() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    return token ? { "Authorization": `token ${token}` } : {};
 }
 
+// ===============================
+// HELPERS
+// ===============================
+function getGithubImage(github) {
+    if (!github) return null;
+    const match = github.match(/github\.com\/([^\/\?\s]+)/);
+    return match ? `https://github.com/${match[1]}.png` : null;
+}
+
+function getInitials(name) {
+    return name.split(" ").map(n => n[0]).join("").toUpperCase();
+}
 
 // ===============================
-// FETCH USER REPOS
+// GITHUB API CORE
 // ===============================
 async function fetchRepos(username) {
-
-  const url = `https://api.github.com/users/${username}/repos`;
-
-  try {
-
-    const res = await fetch(url, {
-      headers: headers
-    });
-
-    if (!res.ok) return [];
-
-    const repos = await res.json();
-
-    return repos.map(repo => ({
-      name: repo.name,
-      description: repo.description,
-      stars: repo.stargazers_count,
-      forks: repo.forks_count,
-      url: repo.html_url,
-      owner: repo.owner.login
-    }));
-
-  } catch {
-    return [];
-  }
-
+    const url = `https://api.github.com/users/${username}/repos?sort=updated&per_page=10`;
+    
+    try {
+        const res = await fetch(url, { headers: getHeaders() });
+        if (!res.ok) return [];
+        const repos = await res.json();
+        return repos.map(repo => ({
+            name: repo.name,
+            description: repo.description,
+            stars: repo.stargazers_count,
+            forks: repo.forks_count,
+            url: repo.html_url,
+            owner: repo.owner.login
+        }));
+    } catch {
+        return [];
+    }
 }
 
-
 // ===============================
-// LOAD PROJECTS
+// LOAD & RENDER
 // ===============================
 async function loadProjects() {
+    const cached = localStorage.getItem(CACHE_KEY);
+    const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
+    const now = Date.now();
 
-  const cached = localStorage.getItem(CACHE_KEY);
-  const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
-
-  const now = Date.now();
-
-  if (cached && cachedTime && now - cachedTime < ONE_HOUR) {
-
-    const projects = JSON.parse(cached);
-
-    renderProjects(projects);
-
-    if (apiLimitBox) {
-      apiLimitBox.textContent = "Using cached project data";
+    if (cached && cachedTime && now - cachedTime < ONE_HOUR) {
+        renderProjects(JSON.parse(cached));
+        if (apiLimitBox) apiLimitBox.textContent = "Viewing cached project data";
+        return;
     }
 
-    return;
-  }
+    const usernames = squadMembers
+        .map(member => {
+            if (!member.github) return null;
+            const parts = member.github.split("/");
+            return parts[parts.length - 1];
+        })
+        .filter(Boolean);
 
-  const usernames = squadMembers
-    .map(member => {
+    try {
+        if (loadingState) loadingState.style.display = "flex";
+        
+        const repoPromises = usernames.map(fetchRepos);
+        const results = await Promise.all(repoPromises);
+        const projects = results.flat();
 
-      if (!member.github) return null;
-
-      const parts = member.github.split("/");
-      return parts[parts.length - 1];
-
-    })
-    .filter(Boolean);
-
-  const repoPromises = usernames.map(fetchRepos);
-
-  const results = await Promise.all(repoPromises);
-
-  const projects = results.flat();
-
-  localStorage.setItem(CACHE_KEY, JSON.stringify(projects));
-  localStorage.setItem(CACHE_TIME_KEY, now);
-
-  renderProjects(projects);
-
-  fetchGitHubLimit();
-
+        if (projects.length > 0) {
+            localStorage.setItem(CACHE_KEY, JSON.stringify(projects));
+            localStorage.setItem(CACHE_TIME_KEY, now);
+            renderProjects(projects);
+        } else {
+            projectGrid.innerHTML = `<div class="api-info">No project data available. Check settings or try later.</div>`;
+        }
+    } finally {
+        if (loadingState) loadingState.style.display = "none";
+    }
 }
 
-
-// ===============================
-// RENDER PROJECTS
-// ===============================
 function renderProjects(projects) {
+    projectGrid.innerHTML = "";
+    const grouped = {};
 
-  projectGrid.innerHTML = "";
-
-  const grouped = {};
-
-  projects.forEach(repo => {
-
-    if (!grouped[repo.owner]) grouped[repo.owner] = [];
-
-    grouped[repo.owner].push(repo);
-
-  });
-
-  squadMembers.forEach(member => {
-
-    if (!member.github) return;
-
-    const parts = member.github.split("/");
-    const username = parts[parts.length - 1];
-
-    const repos = grouped[username] || [];
-
-    const section = document.createElement("div");
-    section.className = "creator-section";
-
-    const header = document.createElement("div");
-    header.className = "creator-header";
-
-    header.innerHTML = `
-      <span class="folder-icon">📁</span>
-      <span class="creator-name">${member.name}</span>
-      <span class="repo-count">${repos.length} projects</span>
-    `;
-
-    const icon = header.querySelector(".folder-icon");
-
-    const grid = document.createElement("div");
-    grid.className = "creator-grid";
-    grid.style.display = "none";
-
-    repos.forEach(project => {
-
-      const card = document.createElement("div");
-      card.className = "project-card";
-
-      card.innerHTML = `
-        <h3>${project.name}</h3>
-        <p>${project.description || "No description available"}</p>
-
-        <div class="project-meta">
-          ⭐ ${project.stars} &nbsp;&nbsp;
-          🍴 ${project.forks}
-        </div>
-
-        <div class="project-owner">
-          Built by ${member.name}
-        </div>
-
-        <a href="${project.url}" target="_blank">
-          View Repository
-        </a>
-      `;
-
-      grid.appendChild(card);
-
+    projects.forEach(repo => {
+        if (!grouped[repo.owner]) grouped[repo.owner] = [];
+        grouped[repo.owner].push(repo);
     });
 
-    header.onclick = () => {
+    squadMembers.forEach(member => {
+        if (!member.github) return;
 
-      const isOpen = grid.style.display === "grid";
+        const parts = member.github.split("/");
+        const username = parts[parts.length - 1];
+        const repos = grouped[username] || [];
 
-      grid.style.display = isOpen ? "none" : "grid";
-      icon.textContent = isOpen ? "📁" : "📂";
+        const section = document.createElement("div");
+        section.className = "creator-section";
 
-    };
+        const profileImg = getGithubImage(member.github);
+        const avatarHtml = `
+            <div class="creator-avatar-wrapper">
+                ${profileImg ? `<img src="${profileImg}" class="creator-avatar" alt="${member.name}" onerror="this.style.display='none'">` : ''}
+                <div class="creator-avatar-fallback">${getInitials(member.name)}</div>
+            </div>
+        `;
 
-    section.appendChild(header);
-    section.appendChild(grid);
+        const header = document.createElement("div");
+        header.className = "creator-header";
+        header.innerHTML = `
+            ${avatarHtml}
+            <span class="creator-name">${member.name}</span>
+            <span class="repo-count">${repos.length} Repos</span>
+        `;
 
-    projectGrid.appendChild(section);
+        const grid = document.createElement("div");
+        grid.className = "creator-grid";
+        grid.style.display = "none";
 
-  });
+        if (repos.length > 0) {
+            repos.forEach(project => {
+                const card = document.createElement("div");
+                card.className = "project-card";
+                card.innerHTML = `
+                    <h3>${project.name}</h3>
+                    <p>${project.description || "No description provided."}</p>
+                    <div class="repo-meta">
+                        <span>⭐ ${project.stars}</span>
+                        <span>🍴 ${project.forks}</span>
+                    </div>
+                    <a href="${project.url}" target="_blank">View Repository</a>
+                `;
+                grid.appendChild(card);
+            });
+        } else {
+            grid.innerHTML = `<div class="api-info" style="grid-column: 1/-1; padding: 20px;">No public repositories found for this user.</div>`;
+        }
 
+        header.onclick = () => {
+            const isOpen = grid.style.display === "grid";
+            grid.style.display = isOpen ? "none" : "grid";
+        };
+
+        section.appendChild(header);
+        section.appendChild(grid);
+        projectGrid.appendChild(section);
+    });
 }
 
-
-// ===============================
-// START
-// ===============================
-loadProjects();
+// Start
+if (projectGrid) loadProjects();

@@ -262,18 +262,116 @@ body{
   }
 }
 
-/* MOBILE */
+/* RESPONSIVE / MOBILE OPTIMIZATIONS */
 
 @media(max-width:900px){
 
+  .navbar {
+    width: 95%;
+    height: auto;
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+    top: 10px;
+  }
+
+  .nav-links {
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    padding: 4px;
+    letter-spacing: 0;
+  }
+
   .hero-main-card{
-    padding:40px;
+    padding: 40px 20px;
+  }
+
+  .hero-main-card h1 {
+    font-size: 32px;
+    text-align: center;
   }
 
   .hero-stats{
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
   }
 
+  .stat-card {
+    height: 160px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+  }
+
+  /* VERTICAL MOBILE TIMELINE */
+  .timeline-line {
+    left: 20px;
+    transform: none;
+  }
+
+  .timeline-container {
+    gap: 40px;
+  }
+
+  .timeline-item {
+    width: 100%;
+    padding: 0 0 0 50px;
+    align-self: flex-start !important;
+    transform: translateX(0) !important;
+  }
+
+  .timeline-dot {
+    left: 13px;
+    right: auto;
+  }
+
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: 13px;
+  }
+
+  .timeline-card {
+    padding: 24px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    margin-bottom: 60px;
+  }
+
+  #timeline, .mentors-section, .students-section {
+    padding: 80px 0;
+  }
+
+  .mentors-grid, .students-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .modal-content {
+    width: 95%;
+    padding: 30px 20px;
+  }
+}
+
+@media(max-width:480px) {
+  .loader-content h1 {
+    font-size: 32px;
+  }
+  
+  .nav-links a {
+    font-size: 12px;
+  }
+  
+  .logo-text {
+    font-size: 12px;
+  }
 }
 
 .navbar{
