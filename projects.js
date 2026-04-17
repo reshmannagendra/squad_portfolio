@@ -11,15 +11,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navBackBtn) navBackBtn.addEventListener('click', goBack);
 
 
-    // Navbar indicator logic
-    const links = document.querySelectorAll(".nav-links a");
-    const indicator = document.querySelector(".nav-indicator");
-    const nav = document.querySelector(".nav-links");
+    // 🍔 Menu Toggle Logic
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+
+    if (menuToggle && navLinks) {
+        menuToggle.addEventListener("click", () => {
+            menuToggle.classList.toggle("active");
+            navLinks.classList.toggle("active");
+            
+            if (navLinks.classList.contains("active")) {
+                document.body.style.overflow = "hidden";
+            } else {
+                document.body.style.overflow = "auto";
+            }
+        });
+
+        // Close menu when links are clicked
+        links.forEach(link => {
+            link.addEventListener("click", () => {
+                menuToggle.classList.remove("active");
+                navLinks.classList.remove("active");
+                document.body.style.overflow = "auto";
+            });
+        });
+    }
 
     if (indicator && nav && links.length > 0) {
-        let activeLink = links[0];
+        let activeLink = Array.from(links).find(l => l.innerText.toLowerCase() === "students") || links[links.length-1];
         
         function moveIndicator(el) {
+            if (window.innerWidth <= 900) return; // Don't move indicator on mobile
             const linkRect = el.getBoundingClientRect();
             const navRect = nav.getBoundingClientRect();
             indicator.style.width = `${linkRect.width}px`;
@@ -35,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         nav.addEventListener("mouseleave", () => moveIndicator(activeLink));
         window.addEventListener('resize', () => moveIndicator(activeLink));
     }
+
 
     // Settings Modal Logic
     const settingsGear = document.getElementById("settingsGear");

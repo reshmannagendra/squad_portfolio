@@ -26,6 +26,35 @@ window.addEventListener("load", () => {
 });
 
 
+/* 🍔 MENU TOGGLE */
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+const links = document.querySelectorAll(".nav-links a");
+
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener("click", () => {
+    menuToggle.classList.toggle("active");
+    navLinks.classList.toggle("active");
+    
+    // Smooth body lock
+    if (navLinks.classList.contains("active")) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  });
+
+  // Close menu when a link is clicked
+  links.forEach(link => {
+    link.addEventListener("click", () => {
+      menuToggle.classList.remove("active");
+      navLinks.classList.remove("active");
+      document.body.style.overflow = "auto";
+    });
+  });
+}
+
+
 /* 🏯 DOJO PARALLAX */
 
 const hero = document.querySelector(".hero");
@@ -35,12 +64,15 @@ window.addEventListener("scroll", () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
       const scrollY = window.scrollY;
-      hero.style.setProperty("--parallax", scrollY * 0.25 + "px");
+      if (hero) {
+        hero.style.setProperty("--parallax", scrollY * 0.25 + "px");
+      }
       ticking = false;
     });
     ticking = true;
   }
 });
+
 
 /* 🥷 MENTORS PARALLAX */
 
