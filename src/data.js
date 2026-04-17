@@ -1,4 +1,4 @@
-const squadMembers = [
+export const squadMembers = [
     {
         name: "Reshman Nagendra",
         bio: "Software developer with a passion for clean architecture patterns",
@@ -84,7 +84,7 @@ const squadMembers = [
         bio: "Problem solver with expertise in algorithms and data structures",
         projects: 4,
         email: "dhanalakshmi.n@kalvium.community",
-        github: "https://github.com/dhanalakshmins140", //needs to verified
+        github: "https://github.com/dhanalakshmins140",
         linkedin: "https://www.linkedin.com/in/dhanalakshmi-n-540869384/"
     },
     {
@@ -286,7 +286,6 @@ const squadMembers = [
         email: "satwik.bhavan@kalvium.community",
         github: "https://github.com/sathvikbs140-dev",
         linkedin: "http://www.linkedin.com/in/sathvik-bhavan-6a1561386"
-
     },
     {
         name: "Sekar B",
@@ -354,7 +353,7 @@ const squadMembers = [
     }
 ];
 
-const mentors = [
+export const mentors = [
   {
     name: "Rishwanth Thakoor",
     bio: "Technical mentor guiding Squad 140 in full-stack architecture and scalable systems.",
@@ -362,7 +361,7 @@ const mentors = [
     email: "thakoor.rishwanth@kalvium.com",
     github: "https://github.com/ThakoorRishwanth",
     linkedin: "https://www.linkedin.com/in/rishwanth-thakoor/",
-    image: "images/mentors/rishwanth.png",
+    image: "/images/mentors/rishwanth.png",
     type: "mentor"
   },
   {
@@ -372,7 +371,7 @@ const mentors = [
     email: "sathya.s@kalvium.com",
     github: "https://github.com/SATHYASHREE30",
     linkedin: "https://www.linkedin.com/in/sathya-shree-361727262/",
-    image: "images/mentors/sathya.png",
+    image: "/images/mentors/sathya.png",
     type: "mentor"
   },
   {
@@ -382,7 +381,7 @@ const mentors = [
     email: "varshaa.k@kalvium.com",
     github: "#",
     linkedin: "#",
-    image: "images/mentors/varshaa.png",
+    image: "/images/mentors/varshaa.png",
     type: "mentor"
   }
 ];
