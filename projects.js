@@ -11,9 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (navBackBtn) navBackBtn.addEventListener('click', goBack);
 
 
+    const links = document.querySelectorAll(".nav-links a");
+    const indicator = document.querySelector(".nav-indicator");
+    const nav = document.querySelector(".nav-links");
+
     // 🍔 Menu Toggle Logic
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
+
 
     if (menuToggle && navLinks) {
         menuToggle.addEventListener("click", () => {
