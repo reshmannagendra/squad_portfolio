@@ -26,9 +26,9 @@ const squadMembers = [
     {
         name: "Elayaraja G",
         bio: "JavaScript enthusiast exploring modern frameworks and libraries",
-        projects: 8,
+        projects: 3,
         email: "elayarajag.s.140@kalvium.community",
-        github: "https://github.com/elayarajags140-commits",
+        github: "https://github.com/darkvex-x",
         linkedin: "https://www.linkedin.com/in/elayaraja-g-391332364/"
     },
     {
